@@ -55,6 +55,8 @@ LDLIB		=	-L../lib/ -L../libs/myteams/
 
 LMY			=	-lmy -lmyteams
 
+RPATH		=	-Wl,-rpath,'$$ORIGIN/libs/myteams'
+
 CPPFLAGS	=	-I../include/ -I../lib/my/include/ -I../libs/myteams/
 
 WFLAGS		=	-W -Wall -Wextra -Werror
@@ -62,12 +64,12 @@ WFLAGS		=	-W -Wall -Wextra -Werror
 LCRITER		= --coverage -lcriterion
 
 $(NAME): $(OBJ)
-	gcc -o $@ $^ $(CPPFLAGS) $(WFLAGS) $(LDLIB) $(LMY)
+	gcc -o $@ $^ $(CPPFLAGS) $(WFLAGS) $(LDLIB) $(LMY) $(RPATH)
 	mv $(NAME) ../
 
 debug:
 	gcc -o $(NAME) $(DIR_SRC) $(DIR_COMMANDS) $(CPPFLAGS) $(LDLIB) $(LMY) \
-	-ggdb3
+	$(RPATH) -ggdb3
 	mv $(NAME) ../
 
 all: $(NAME)

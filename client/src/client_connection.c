@@ -101,6 +101,7 @@ static void client_loop(client_t *client)
     client->user_input = malloc(sizeof(user_input_t));
     client->user_input->params = malloc(sizeof(param_t));
     while (is_running) {
+        write(1, "> ", 2);
         otherfds = readfds;
         result = select(FD_SETSIZE, &otherfds, NULL, NULL, NULL);
         if (handle_select_and_sigint(client,
